@@ -6,7 +6,7 @@
 /*   By: suntlee <suntlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 14:06:29 by suntlee           #+#    #+#             */
-/*   Updated: 2020/09/15 01:52:53 by suntlee          ###   ########.fr       */
+/*   Updated: 2020/09/15 04:45:57 by suntlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,5 @@ void	print_pointer(t_printf *p)
 	p->f |= FLAG_SHARP;
 	p->f |= FLAG_PTR;
 	p->printed = 0;
-	itoa_base_printf((uintmax_t)ptr, 16, p);
+	itoa_base_printf((uintmax_t)ptr, 16, p, !ptr ? 1 : 0);
 }

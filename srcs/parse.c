@@ -6,7 +6,7 @@
 /*   By: suntlee <suntlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/28 14:27:08 by suntlee           #+#    #+#             */
-/*   Updated: 2020/09/14 23:05:49 by suntlee          ###   ########.fr       */
+/*   Updated: 2020/09/15 05:28:40 by suntlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,17 @@ static void	parse_flags(t_printf *p)
 	if (p->f & FLAG_WILDCARD)
 	{
 		p->f &= ~FLAG_WILDCARD;
-		if ((p->n = (int)va_arg(p->args, int)) < 0)
-		{
-			p->f |= FLAG_MINUS;
-			p->f &= ~FLAG_ZERO;
-		}
+		p->n = (int)va_arg(p->args, int);
 		if (!(p->f & FLAG_PRECISION))
+		{
 			p->min_length = p->n < 0 ? -p->n : p->n;
+			if (p->n < 0)
+				p->f |= FLAG_MINUS;
+		}
 		else
 		{
+			if (p->n >= 0)
+				p->f &= ~FLAG_ZERO;
 			p->precision = p->n < 0 ? 0 : p->n;
 			p->f = p->n < 0 ? p->f & ~FLAG_PRECISION : p->f;
 		}
@@ -44,18 +46,9 @@ static void	parse_width_precision(t_printf *p)
 	{
 		++p->format;
 		p->precision = ft_max(ft_atoi_parse(&p->format), 0);
+		if (*p->format != '*')
+			p->f &= ~FLAG_ZERO;
 		p->f |= FLAG_PRECISION;
-		p->f &= ~FLAG_ZERO;
-	}
-	while (1)
-	{
-		if (*p->format == 'l')
-			p->f |= (p->format[1] == 'l' && ++p->format) ? FLAG_LL : FLAG_L;
-		else if (*p->format == 'h')
-			p->f |= (p->format[1] == 'h' && ++p->format) ? FLAG_SS : FLAG_S;
-		else
-			break ;
-		++p->format;
 	}
 }
 
@@ -77,6 +70,17 @@ static void	parse_conversion_specifier(t_printf *p)
 {
 	t_func_pointer	f[256];
 
+	while (1)
+	{
+		if (*p->format == 'l')
+			p->f |= (p->format[1] == 'l' && ++p->format) ? FLAG_LL : FLAG_L;
+		else if (*p->format == 'h')
+			p->f |= (p->format[1] == 'h' && ++p->format) ? FLAG_SS : FLAG_S;
+		else
+			break ;
+		++p->format;
+	}
+	p->c = *p->format;
 	if (ft_strchr_index("csdiouxXp%", p->c) == -1)
 	{
 		p->len = -1;
@@ -97,6 +101,5 @@ void		parse_options(t_printf *p)
 	parse_flags(p);
 	parse_width_precision(p);
 	parse_flags(p);
-	p->c = *p->format;
 	parse_conversion_specifier(p);
 }
