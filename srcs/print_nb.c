@@ -6,7 +6,7 @@
 /*   By: suntlee <suntlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/03 16:04:55 by suntlee           #+#    #+#             */
-/*   Updated: 2020/09/14 21:50:27 by suntlee          ###   ########.fr       */
+/*   Updated: 2020/09/14 22:52:10 by suntlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ void		itoa_base_printf(uintmax_t n, int base, t_printf *p)
 	p->printed = (p->f & FLAG_PRECISION && !p->precision && !n)
 					? 0 : ft_max(p->printed, p->precision);
 	((p->f & FLAG_SHARP) && base == 8) ? ++p->printed : 0;
-	(((p->f & FLAG_SHARP) && base == 16 && n) || p->f & FLAG_POINTER) ? p->printed += 2 : 0;
+	(((p->f & FLAG_SHARP) && base == 16 && n) || p->f & FLAG_POINTER)
+		? p->printed += 2 : 0;
 	p->padding = ft_max(0, p->min_length - p->printed);
 	p->len += p->padding + p->printed;
 	padding(p, 0);
