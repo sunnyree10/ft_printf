@@ -6,7 +6,7 @@
 /*   By: suntlee <suntlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 14:06:29 by suntlee           #+#    #+#             */
-/*   Updated: 2020/09/13 15:07:16 by suntlee          ###   ########.fr       */
+/*   Updated: 2020/09/15 01:52:53 by suntlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	print_pointer(t_printf *p)
 	p->min_length -= (p->f & FLAG_ZERO ? 2 : 0);
 	p->padding = ft_max(0, p->min_length - 3 - p->printed);
 	p->f |= FLAG_SHARP;
-	p->f |= FLAG_POINTER;
+	p->f |= FLAG_PTR;
 	p->printed = 0;
 	itoa_base_printf((uintmax_t)ptr, 16, p);
 }

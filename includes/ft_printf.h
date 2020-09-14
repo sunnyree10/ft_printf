@@ -6,7 +6,7 @@
 /*   By: suntlee <suntlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/17 15:41:44 by suntlee           #+#    #+#             */
-/*   Updated: 2020/09/14 23:16:33 by suntlee          ###   ########.fr       */
+/*   Updated: 2020/09/15 01:52:35 by suntlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define FLAG_WILDCARD 32
 # define FLAG_UPCASE 64
 # define FLAG_PRECISION 128
-# define FLAG_POINTER 256
+# define FLAG_PTR 256
 # define FLAG_L 512
 # define FLAG_LL 1024
 # define FLAG_S 2048

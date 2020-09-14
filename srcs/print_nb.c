@@ -6,26 +6,29 @@
 /*   By: suntlee <suntlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/03 16:04:55 by suntlee           #+#    #+#             */
-/*   Updated: 2020/09/14 22:52:10 by suntlee          ###   ########.fr       */
+/*   Updated: 2020/09/15 01:53:56 by suntlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	itoa_base(uintmax_t tmp, int base, char *s,
-						t_printf *p)
+static void	itoa_base(uintmax_t tmp, char *s, t_printf *p, int ext)
 {
 	int	len;
 
-	if (tmp && !(p->f & FLAG_POINTER) && (p->f & FLAG_ZERO) &&
-	(p->f & FLAG_SHARP) && base == 16 && !(p->f & FLAG_LL) && p->printed > 3)
+	if (tmp && !(p->f & FLAG_PTR) && (p->f & FLAG_ZERO) &&
+	(p->f & FLAG_SHARP) && p->base == 16 && !(p->f & FLAG_LL) && p->printed > 3
+	&& ext)
+	{
+		p->len -= 2;
 		p->printed -= 2;
+	}
 	len = p->printed;
 	while (len--)
 	{
-		s[len] = tmp % base + ((tmp % base < 10) ? '0' :
-				'a' - 10 - ((p->f & FLAG_UPCASE) >> 1));
-		tmp /= base;
+		s[len] = tmp % p->base + ((tmp % p->base < 10) ? '0' :
+		'a' - 10 - ((p->f & FLAG_UPCASE) >> 1));
+		tmp /= p->base;
 	}
 }
 
@@ -48,7 +51,7 @@ void		itoa_printf(intmax_t n, t_printf *p)
 	p->len += p->padding + p->printed;
 	padding(p, 0);
 	tmp = n < 0 ? -n : n;
-	itoa_base(tmp, p->base, s, p);
+	itoa_base(tmp, s, p, 0);
 	(p->f & FLAG_SPACE) ? s[0] = ' ' : 0;
 	(n < 0) ? s[0] = '-' : 0;
 	((p->f & FLAG_PLUS) && n >= 0) ? s[0] = '+' : 0;
@@ -56,29 +59,30 @@ void		itoa_printf(intmax_t n, t_printf *p)
 	padding(p, 1);
 }
 
-void		itoa_base_printf(uintmax_t n, int base, t_printf *p)
+void		itoa_base_printf(uintmax_t n, int b, t_printf *p)
 {
 	uintmax_t	tmp;
 	char		s[21];
+	int			ext;
 
 	p->printed = !n ? 1 : 0;
 	tmp = n;
 	while (tmp && ++p->printed)
-		tmp /= base;
+		tmp /= b;
 	(p->f & FLAG_ZERO) ? p->precision = p->min_length : 0;
+	ext = (p->printed >= p->precision) ? 0 : 1;
 	p->printed = (p->f & FLAG_PRECISION && !p->precision && !n)
-					? 0 : ft_max(p->printed, p->precision);
-	((p->f & FLAG_SHARP) && base == 8) ? ++p->printed : 0;
-	(((p->f & FLAG_SHARP) && base == 16 && n) || p->f & FLAG_POINTER)
+		? 0 : ft_max(p->printed, p->precision);
+	((p->f & FLAG_SHARP) && b == 8) ? ++p->printed : 0;
+	(((p->f & FLAG_SHARP) && b == 16 && n) || p->f & FLAG_PTR)
 		? p->printed += 2 : 0;
 	p->padding = ft_max(0, p->min_length - p->printed);
 	p->len += p->padding + p->printed;
 	padding(p, 0);
-	itoa_base(n, base, s, p);
-	if ((n || (p->f & FLAG_POINTER))
-		&& (p->f & FLAG_SHARP) && (base == 8 || base == 16))
+	itoa_base(n, s, p, ext);
+	if ((n || (p->f & FLAG_PTR)) && (p->f & FLAG_SHARP) && (b == 8 || b == 16))
 		s[0] = '0';
-	if ((n || (p->f & FLAG_POINTER)) && (p->f & FLAG_SHARP) && base == 16)
+	if ((n || (p->f & FLAG_PTR)) && (p->f & FLAG_SHARP) && b == 16)
 		s[1] = (p->f & FLAG_UPCASE) ? 'X' : 'x';
 	write(p->fd, s, p->printed);
 	padding(p, 1);
