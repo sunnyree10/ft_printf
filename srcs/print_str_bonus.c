@@ -6,7 +6,7 @@
 /*   By: suntlee <suntlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 23:58:22 by suntlee           #+#    #+#             */
-/*   Updated: 2020/09/14 22:32:46 by suntlee          ###   ########.fr       */
+/*   Updated: 2020/09/14 23:13:01 by suntlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,11 @@ static void	print_wstr(t_printf *p)
 	int			char_len;
 
 	s = va_arg(p->args, wchar_t *);
+	if (s == 0)
+		s = (wchar_t *)"(null)";
 	p->printed = (int)ft_wstrlen(s);
 	if (p->f & FLAG_PRECISION)
-	{
-		if (s == 0)
-			p->printed = p->precision < 6 ? 0 : 6;
-		else
-			p->printed = ft_min(p->printed, p->precision);
-	}
+		p->printed = ft_min(p->printed, p->precision);
 	p->printed -= wstr_padding(p->printed, s);
 	p->padding = ft_max(0, p->min_length - p->printed);
 	p->len += p->padding + p->printed;
@@ -112,19 +109,16 @@ void		print_str(t_printf *p)
 		return ;
 	}
 	s = va_arg(p->args, char *);
+	if (s == 0)
+		s = "(null)";
 	p->printed = s == 0 ? 6 : (int)(ft_strlen((char *)s));
 	if (p->f & FLAG_PRECISION)
-	{
-		if (s == 0)
-			p->printed = p->precision < 6 ? 0 : 6;
-		else
-			p->printed = ft_min(p->printed, p->precision);
-	}
+		p->printed = ft_min(p->printed, p->precision);
 	p->padding = ft_max(0, p->min_length - p->printed);
 	p->len += p->padding + p->printed;
 	padding(p, 0);
 	if (s == 0)
-		write(p->fd, "(null)", p->printed);
+		write(p->fd, s, p->printed);
 	else
 		write(p->fd, s, p->printed);
 	padding(p, 1);

@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_bonus.h                                  :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: suntlee <suntlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/17 15:41:44 by suntlee           #+#    #+#             */
-/*   Updated: 2020/09/14 23:03:48 by suntlee          ###   ########.fr       */
+/*   Updated: 2020/09/14 23:16:33 by suntlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_BONUS_H
-# define FT_PRINTF_BONUS_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
 # include "libft.h"
 # include <stdarg.h>
@@ -21,19 +21,19 @@
 # include <stdlib.h>
 # include <wchar.h>
 
-# define FLAG_MINUS	0
-# define FLAG_PLUS	1
-# define FLAG_SPACE 2
-# define FLAG_SHARP	4
-# define FLAG_ZERO	8
-# define FLAG_WILDCARD 16
-# define FLAG_UPCASE 32
-# define FLAG_PRECISION 64
-# define FLAG_POINTER 128
-# define FLAG_L 256
-# define FLAG_LL 512
-# define FLAG_S 1024
-# define FLAG_SS 2048
+# define FLAG_MINUS	1
+# define FLAG_PLUS	2
+# define FLAG_SPACE 4
+# define FLAG_SHARP	8
+# define FLAG_ZERO	16
+# define FLAG_WILDCARD 32
+# define FLAG_UPCASE 64
+# define FLAG_PRECISION 128
+# define FLAG_POINTER 256
+# define FLAG_L 512
+# define FLAG_LL 1024
+# define FLAG_S 2048
+# define FLAG_SS 4096
 
 typedef struct		s_printf
 {
