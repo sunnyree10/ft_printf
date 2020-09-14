@@ -6,7 +6,7 @@
 /*   By: suntlee <suntlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/28 14:27:08 by suntlee           #+#    #+#             */
-/*   Updated: 2020/09/14 22:23:24 by suntlee          ###   ########.fr       */
+/*   Updated: 2020/09/14 23:05:49 by suntlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	parse_width_precision(t_printf *p)
 	}
 }
 
-static void	init_fp_arr(funcPointer fp_arr[])
+static void	init_fp_arr(t_func_pointer fp_arr[])
 {
 	fp_arr['d'] = &print_nb;
 	fp_arr['i'] = &print_nb;
@@ -75,7 +75,7 @@ static void	init_fp_arr(funcPointer fp_arr[])
 
 static void	parse_conversion_specifier(t_printf *p)
 {
-	funcPointer	f[256];
+	t_func_pointer	f[256];
 
 	if (ft_strchr_index("csdiouxXp%", p->c) == -1)
 	{
