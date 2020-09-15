@@ -6,7 +6,7 @@
 /*   By: suntlee <suntlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/10 23:58:22 by suntlee           #+#    #+#             */
-/*   Updated: 2020/09/14 23:13:01 by suntlee          ###   ########.fr       */
+/*   Updated: 2020/09/15 15:35:04 by suntlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,7 @@ static void	print_wstr(t_printf *p)
 	int			char_len;
 
 	s = va_arg(p->args, wchar_t *);
-	if (s == 0)
-		s = (wchar_t *)"(null)";
-	p->printed = (int)ft_wstrlen(s);
+	p->printed = s == 0 ? 6 : (int)ft_wstrlen(s);
 	if (p->f & FLAG_PRECISION)
 		p->printed = ft_min(p->printed, p->precision);
 	p->printed -= wstr_padding(p->printed, s);
@@ -76,10 +74,16 @@ static void	print_wstr(t_printf *p)
 	char_len = 0;
 	while (s && (*s != L'\0') && (p->printed -= char_len) > 0)
 	{
-		char_len = ft_wcharlen((wint_t)*s);
+		if ((char_len = ft_wcharlen((wint_t)*s)) == 0)
+		{
+			p->len = -1;
+			return ;
+		}
 		print_wchar(p, (unsigned int)*s, p->printed, char_len);
 		s++;
 	}
+	if (s == 0)
+		write(p->fd, "(null)", p->printed);
 	padding(p, 1);
 }
 
@@ -109,8 +113,6 @@ void		print_str(t_printf *p)
 		return ;
 	}
 	s = va_arg(p->args, char *);
-	if (s == 0)
-		s = "(null)";
 	p->printed = s == 0 ? 6 : (int)(ft_strlen((char *)s));
 	if (p->f & FLAG_PRECISION)
 		p->printed = ft_min(p->printed, p->precision);
@@ -118,7 +120,7 @@ void		print_str(t_printf *p)
 	p->len += p->padding + p->printed;
 	padding(p, 0);
 	if (s == 0)
-		write(p->fd, s, p->printed);
+		write(p->fd, "(null)", p->printed);
 	else
 		write(p->fd, s, p->printed);
 	padding(p, 1);

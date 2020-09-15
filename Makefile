@@ -6,11 +6,11 @@
 #    By: suntlee <suntlee@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/05 19:21:13 by suntlee           #+#    #+#              #
-#    Updated: 2020/09/14 22:47:24 by suntlee          ###   ########.fr        #
+#    Updated: 2020/09/15 15:36:24 by suntlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
+CC = clang
 NAME = libftprintf.a
 FLAGS = -Wall -Wextra -Werror
 LIBFT = libft
@@ -36,13 +36,6 @@ $(NAME): $(OBJS)
 $(DIR_O)/%.o: $(DIR_S)/%.c $(HEADER)/ft_printf.h
 	mkdir -p obj
 	$(CC) $(FLAGS) -I $(HEADER) -o $@ -c $<
-
-norme:
-	norminette ./libft/
-	echo
-	norminette ./$(HEADER)/
-	echo
-	norminette ./$(DIR_S)/
 
 clean:
 	rm -f $(OBJS)
