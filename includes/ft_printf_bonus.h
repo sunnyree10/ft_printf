@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_printf_bonus.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suntlee <suntlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: suntlee </var/mail/suntlee>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/17 15:41:44 by suntlee           #+#    #+#             */
-/*   Updated: 2020/09/14 23:16:33 by suntlee          ###   ########.fr       */
+/*   Created: 2020/09/15 14:10:11 by suntlee           #+#    #+#             */
+/*   Updated: 2020/09/15 14:10:30 by suntlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#ifndef FT_PRINTF_BONUS_H
+# define FT_PRINTF_BONUS_H
 
 # include "libft.h"
 # include <stdarg.h>
@@ -29,7 +29,7 @@
 # define FLAG_WILDCARD 32
 # define FLAG_UPCASE 64
 # define FLAG_PRECISION 128
-# define FLAG_POINTER 256
+# define FLAG_PTR 256
 # define FLAG_L 512
 # define FLAG_LL 1024
 # define FLAG_S 2048
@@ -65,7 +65,8 @@ void				print_wchar(t_printf *p, unsigned int n,
 int					ft_printf(const char *format, ...);
 void				padding(t_printf *p, int n);
 void				parse_options(t_printf *p);
-void				itoa_base_printf(uintmax_t n, int base, t_printf *p);
+void				itoa_base_printf(uintmax_t n, int base,
+									t_printf *p, int len);
 uint8_t				base_to_num(char c);
 
 #endif

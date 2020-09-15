@@ -6,7 +6,7 @@
 /*   By: suntlee <suntlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/03 16:04:55 by suntlee           #+#    #+#             */
-/*   Updated: 2020/09/15 05:21:34 by suntlee          ###   ########.fr       */
+/*   Updated: 2020/09/15 14:15:25 by suntlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void		itoa_base_printf(uintmax_t n, int b, t_printf *p, int len)
 				? 0 : ft_max(len, p->precision);
 	if (((p->f & FLAG_SHARP) && b == 16 && n) || p->f & FLAG_PTR)
 	{
-		if (!(p->f & FLAG_ZERO))	
+		if (!(p->f & FLAG_ZERO))
 			p->printed += 2;
 		else if ((p->f & FLAG_ZERO) && len + 2 > p->precision)
 			p->printed = len + 2;
@@ -115,4 +115,3 @@ void		print_nb_base(t_printf *p)
 		p->precision = p->min_length;
 	itoa_base_printf(n, p->base, p, !n ? 1 : 0);
 }
-

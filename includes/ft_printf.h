@@ -6,7 +6,7 @@
 /*   By: suntlee <suntlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/17 15:41:44 by suntlee           #+#    #+#             */
-/*   Updated: 2020/09/15 04:46:28 by suntlee          ###   ########.fr       */
+/*   Updated: 2020/09/15 14:09:43 by suntlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void				print_wchar(t_printf *p, unsigned int n,
 int					ft_printf(const char *format, ...);
 void				padding(t_printf *p, int n);
 void				parse_options(t_printf *p);
-void				itoa_base_printf(uintmax_t n, int base, t_printf *p, int len);
+void				itoa_base_printf(uintmax_t n, int base,
+									t_printf *p, int len);
 uint8_t				base_to_num(char c);
 
 #endif
